@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - MySocial</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        #loading-bar-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: #f3f3f3;
+            display: none; 
+        }
+        #loading-bar {
+            height: 100%;
+            width: 0;
+            background: #3498db;
+            transition: width 0.4s ease;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">MySocial</div>
+        <nav>
+            <a href="{{ url_for('index') }}" class="active">Home</a>
+            {% if 'username' in session %}
+                <a href="{{ '/profile' + '/' + session['username'] }}">Profile</a>
+                <a href="{{ url_for('index') }}">Logout</a>
+            {% else %}
+                <a href="{{ url_for('login') }}">Login</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <div id="loading-bar-container">
+        <div id="loading-bar"></div>
+    </div>
+
+    <main>
+        <div class="post-feed">
+            <div class="grid" id="post-container">
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 MySocial. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const postContainer = document.getElementById('post-container');
+        const loadingBarContainer = document.getElementById('loading-bar-container');
+        const loadingBar = document.getElementById('loading-bar');
+        const imageUrl = 'https://picsum.photos/1080/1080'; 
+    
+        const usernames = [
+            "emilyr", "johnd", "sarahk", "michaelt", "jessical",
+            "davids", "lauram", "chrisb", "annaw", "matthewj",
+            "sophiah", "jamesf", "oliviag", "danielc", "isabellan",
+            "williamy", "avaq", "alexanderp", "miae", "ethanr"
+        ];
+    
+        function getRandomUsername() {
+            const randomIndex = Math.floor(Math.random() * usernames.length);
+            return usernames[randomIndex];
+        }
+    
+        async function fetchImages(count) {
+            loadingBarContainer.style.display = 'block'; 
+            const fetchPromises = [];
+    
+            for (let i = 0; i < count; i++) {
+                fetchPromises.push(
+                    fetch(imageUrl).then(response => {
+                        return response.blob();
+                    }).then(imageBlob => {
+                        const imgUrl = URL.createObjectURL(imageBlob);
+                        return {
+                            imgUrl,
+                            username: getRandomUsername(),
+                            caption: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.`
+                        };
+                    })
+                );
+            }
+    
+            try {
+                const posts = await Promise.all(fetchPromises);
+                posts.forEach(post => {
+                    const postDiv = document.createElement('div');
+                    postDiv.className = 'post';
+                    postDiv.innerHTML = `
+                    <a href="#" style="text-decoration: none; color: black;">
+                        <img src="${post.imgUrl}" alt="${post.username}">
+                        <div class="post-info">
+                            <h3>${post.username}</h3>
+                            <p>${post.caption}</p>
+                        </div>
+                    </a>
+                    `;
+                    postContainer.appendChild(postDiv);
+                });
+            } catch (error) {
+                console.error('Error fetching images:', error);
+            } finally {
+                loadingBar.style.width = '100%'; 
+                setTimeout(() => {
+                    loadingBarContainer.style.display = 'none'; 
+                    loadingBar.style.width = '0'; 
+                }, 400); 
+            }
+        }
+    
+        fetchImages(6);
+    </script>
+
+</body>
+</html>

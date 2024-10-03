@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ username }}'s Profile - MySocial</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <header>
+        <div class="logo">MySocial</div>
+        <nav>
+            <a href="{{ url_for('index') }}">Home</a>
+            {% if 'username' in session %}
+                <a href="{{ '/profile' + '/' + session['username'] }}" class="active" >Profile</a>
+                <a href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+                <a href="{{ url_for('login') }}">Login</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main>
+        <div class="profile-container">
+            <div class="profile-info">
+                <embed src="{{ img }}" type="image/svg+xml" class="avatar" />
+                <div class="bio">
+                    {% if session['username'] == 'admin' %}
+                        <h3>FLAG{5v9_x55}</h3>
+                    {% endif %}
+                    <h3>{{ username }}</h3>
+                    <p>{{ bio }}</p>
+                </div>
+            </div>
+            {% if 'username' in session and session['username'] == username %}
+                <h2>Update Profile</h2>
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <ul class="flashed-messages">
+                        {% for category, message in messages %}
+                            <li class="{{ category }}">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                {% endwith %}
+                <form method="POST" enctype="multipart/form-data" class="update-form">
+                    <label for="bio">Bio</label>
+                    <textarea id="bio" name="bio" rows="4" required>{{ bio }}</textarea>
+                    
+
+                    <label for="profile_image">Profile Picture</label>
+                    <input type="file" id="profile_image" name="profile_image" accept="image/*">
+
+                    <button type="submit">Update Profile</button>
+                </form>
+            {% endif %}
+            <h2>Posts by {{ username }}</h2>
+            <div class="post-feed">
+                <div class="grid">
+                    {% if posts %}
+                        {% for post in posts %}
+                            <div class="post">
+                                <div class="post-info">
+                                    <h3>{{ post.username }}</h3>
+                                    <p>{{ post.caption }}</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="no-posts">No posts yet.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 MySocial. All rights reserved.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,227 @@
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    background-color: #f8f8f8;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+nav {
+    display: flex;
+}
+
+nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #333;
+}
+
+nav a.active {
+    color: #007bff; /* Blue accent for the active link */
+}
+
+main {
+    flex: 1;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.post-feed {
+    width: 100%;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px; /* Space between posts */
+    padding: 20px 0;
+}
+
+.post {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden; /* Prevents overflow for images */
+    background-color: #ffffff;
+}
+
+.post img {
+    width: 100%; /* Makes image responsive */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.post-info {
+    padding: 10px;
+}
+
+.login-form, .registration-form {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    width: 300px;
+}
+
+.login-form h2, .registration-form h2 {
+    margin-bottom: 20px;
+}
+
+.login-form label, .registration-form label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+.login-form input, .registration-form input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #007bff; /* Blue border for input fields */
+    border-radius: 4px;
+}
+
+.login-form button, .registration-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff; /* Blue button */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.login-form button:hover, .registration-form button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #f8f8f8;
+}
+
+/* Profile styles */
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+}
+
+.profile-info {
+    display: flex;
+    align-items: center;
+}
+
+.avatar {
+    width: 100px; /* Set the size of the avatar */
+    height: 100px;
+    border-radius: 50%; /* Circular avatar */
+    margin-right: 20px;
+}
+
+.bio {
+    max-width: 300px; /* Limit the width of the bio section */
+}
+
+.bio h3 {
+    margin: 0 0 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .profile-info {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .bio {
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.no-posts {
+    text-align: center; /* Center the text */
+    font-size: 18px; /* Optional: Adjust font size */
+    margin: 20px 0; /* Add some margin for spacing */
+    color: #555; /* Optional: Change text color */
+}
+
+
+.update-form {
+    margin-top: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    background-color: #ffffff;
+}
+
+.update-form label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+.update-form textarea,
+.update-form input[type="file"],
+.update-form button {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.update-form button {
+    padding: 10px;
+    background-color: #007bff; /* Blue button */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.update-form button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+.flashed-messages {
+    list-style-type: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+.error {
+    color: red; /* Red color for error messages */
+}
+
+.success {
+    color: green; /* Red color for error messages */
+}
