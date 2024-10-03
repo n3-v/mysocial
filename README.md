@@ -15,7 +15,6 @@ chmod +x ./build_docker.sh
 ```
 
 # Solution
----
 
 1. Sign up for an account
 2. On your profile, upload a SVG XSS payload as your profile image, REF - https://infosecwriteups.com/stored-xss-using-svg-file-2e3608248fae
